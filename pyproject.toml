@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tools.setuptools]
+packages = [{include = "src"}]
+
+[project]
+name = "oer-scraping"
+version = "0.1.0"
+requires-python = ">=3.10, <=3.12"
+dependencies = [
+    "numpy == 1.26.*",
+    "pandas == 2.*",
+    "beautifulsoup4 == 4.*",
+    "requests == 2.*",
+    "lxml == 5.*",
+    "tqdm == 4.*",
+    "peewee == 3.17.*",
+    "joblib == 1.4.*",
+    "seaborn == 0.13.*",
+]
