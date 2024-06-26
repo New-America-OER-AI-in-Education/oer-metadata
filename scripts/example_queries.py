@@ -19,7 +19,7 @@ query = (
     .order_by(fn.Count(ResourceType.resource).desc())
 )
 q = pd.DataFrame(query.dicts())
-
+q.head()
 # %% show subjects
 query = (
     Subject.select(Subject, fn.Count(ResourceSubject.resource).alias("count"))
