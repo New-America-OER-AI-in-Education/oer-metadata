@@ -47,9 +47,10 @@ embed_strings = {
 string_lengths = np.array(list({k: len(v) for k,v in embed_strings.items()}.values()))
 long_strings = {k: v for k,v in embed_strings.items() if len(v)>10000}
 plt.hist(string_lengths[string_lengths<5000])
+# plt.hist(string_lengths)
 
 # keep up to 3500 characters
-embed_strings = {k: v for k,v in embed_strings.items() if len(v)<3500}
+# embed_strings = {k: v for k,v in embed_strings.items() if len(v)<3500}
 
 #%% 
 with open(DATADIR / "strings_to_embed.json",'w',encoding="utf8") as f:

@@ -24,7 +24,7 @@ with open(resource_data_file, "r", encoding="utf16") as f:
 #%%
 # tsne
 model = TSNE(n_components=2, random_state=0)
-model.fit_transform(resource_embs[:5000,:])
+Xtsne = model.fit_transform(resource_embs)
 
 #%%
 # pca
@@ -32,8 +32,28 @@ model = PCA(n_components=2, random_state=0)
 Xpca = model.fit_transform(resource_embs)
 
 #%%
-plt.scatter(Xpca[:,0], Xpca[:,1], s=1, alpha=0.1)
-
+f,ax = plt.subplots()
+ax.scatter(Xtsne[:,0], Xtsne[:,1], s=1, alpha=0.1)
+# i = 4726
+# ax.plot(Xtsne[i,0],Xtsne[i,1],'k',markersize=12)
 #%% weird cluster
 idx = np.logical_and((Xpca[:,0]>0.45), (Xpca[:,1]>0.2))
 cluster_ids = [resource_ids[i] for i in np.where(idx)[0]]
+
+#%%
+#[i for i,x in enumerate(resource_ids) if x == "materials.course.146489"]
+
+#%%
+f,ax = plt.subplots()
+ax.scatter(Xtsne[:,0], Xtsne[:,1], s=1, alpha=0.1)
+# i = 4726
+
+#%%
+from sklearn.cluster import KMeans
+mdl = KMeans(n_clusters=20)
+mdl.fit(resource_embs)
+
+#%%
+f,ax = plt.subplots()
+# ax.scatter(Xtsne[:,0], Xtsne[:,1], s=1, alpha=0.1)
+ax.scatter(Xtsne[:,0], Xtsne[:, 1], c=mdl.labels_.astype(float), s=4, alpha=0.1)
