@@ -43,5 +43,17 @@ for chunk in chunked(embed_strings.keys(), batch_size):
         resource_embeddings[k] = v
 
 #%%
-resource_embs_np = {k, np.array(v.embedding)}
-np.array([emb.embedding for emb in embs.data])
+resource_embs_np = {k: np.array(v.embedding) for k,v in resource_embeddings.items()}
+
+#%%
+embs_array = np.array(list(resource_embs_np.values()))
+np.save(DATADIR / "embs_array.npy", embs_array)
+#%%
+with open(DATADIR / "embs_ids.json",'w',encoding="utf8") as f:
+    json.dump(list(resource_embs_np.keys()), f, indent=2)
+# np.array([emb.embedding for emb in embs.data])
+#%%
+resource_embs_vec = {k: v.embedding for k,v in resource_embeddings.items()}
+#%%
+with open(DATADIR / "string_embeddings.json",'w',encoding="utf8") as f:
+    json.dump(resource_embs_vec, f, indent=2)

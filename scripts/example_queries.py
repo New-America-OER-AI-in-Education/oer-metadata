@@ -76,3 +76,5 @@ query = (
 )
 q = pd.DataFrame(query.dicts())
 print(q.iloc[:15,:])
+
+#%%
