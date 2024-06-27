@@ -1,6 +1,8 @@
 # %%
 from metadb import *
 import json
+import numpy as np
+import matplotlib.pyplot as plt
 
 # load resource data
 search_data_file = DATADIR / "metadata_from_search_results.json"
@@ -41,6 +43,14 @@ embed_strings = {
 
 #%% 
 # how long are the strings we want to embed
-import numpy as np
-string_lengths = {k: len(v) for k,v in embed_strings.items()}
+# string_lengths = {k: len(v) for k,v in embed_strings.items()}
 string_lengths = np.array(list({k: len(v) for k,v in embed_strings.items()}.values()))
+long_strings = {k: v for k,v in embed_strings.items() if len(v)>10000}
+plt.hist(string_lengths[string_lengths<5000])
+
+# keep up to 3500 characters
+embed_strings = {k: v for k,v in embed_strings.items() if len(v)<3500}
+
+#%% 
+with open(DATADIR / "strings_to_embed.json",'w',encoding="utf8") as f:
+    json.dump(embed_strings, f, indent=2)
