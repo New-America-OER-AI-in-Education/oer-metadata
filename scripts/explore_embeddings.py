@@ -50,10 +50,23 @@ ax.scatter(Xtsne[:,0], Xtsne[:,1], s=1, alpha=0.1)
 
 #%%
 from sklearn.cluster import KMeans
-mdl = KMeans(n_clusters=20)
+mdl = KMeans(n_clusters=60)
 mdl.fit(resource_embs)
 
-#%%
 f,ax = plt.subplots()
 # ax.scatter(Xtsne[:,0], Xtsne[:,1], s=1, alpha=0.1)
 ax.scatter(Xtsne[:,0], Xtsne[:, 1], c=mdl.labels_.astype(float), s=4, alpha=0.1)
+
+#%%
+distorsions = []
+for k in range(2, 100,10):
+    print(k)
+    kmeans = KMeans(n_clusters=k)
+    kmeans.fit(resource_embs)
+    distorsions.append(kmeans.inertia_)
+
+#%%
+fig = plt.figure(figsize=(15, 5))
+plt.plot(range(2, 20), distorsions)
+plt.grid(True)
+plt.title('Elbow curve')
