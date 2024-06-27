@@ -25,3 +25,22 @@ embed_string = {
     for r in lecture_notes
     if r["abstract"] is not None and r["title"] is not None
 }
+
+# %%
+titles = {
+    r["identifier"]: r["title"]
+    for r in search_data["resources"].values()
+    if r["abstract"] is not None
+}
+
+embed_strings = {
+    k: v + " " + search_data["resources"][k]["abstract"]
+    for k, v in titles.items()
+    if search_data["resources"][k]["abstract"] is not None
+}
+
+#%% 
+# how long are the strings we want to embed
+import numpy as np
+string_lengths = {k: len(v) for k,v in embed_strings.items()}
+string_lengths = np.array(list({k: len(v) for k,v in embed_strings.items()}.values()))
